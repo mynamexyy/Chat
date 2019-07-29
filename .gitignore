@@ -1,0 +1,7 @@
+*.py[cod]
+frontend/node_modules/
+frontend/dist/
+frontend/.idea/
+backend/_pycache_/
+backend/files/
+npm-debug.log

@@ -1,0 +1,44 @@
+.main{
+  display: flex;
+  .left{
+    flex: 2;
+  }
+  .center{
+    flex: 3;
+    .msg_con{
+      height: 400px;
+      overflow: auto;
+    }
+  }
+  .right{
+    flex: 2;
+  }
+}
+.mheader{
+  padding-left:0;
+  .anticon-user{
+    min-width: 14px;
+    margin-top: 6px;
+    margin-right: 1px;
+    font-size: 25px;
+  }
+  .mlogo{
+    height: 64px;
+    /* margin-top: 20px; */
+    padding-top: 12px;
+  }
+}
+.UploadModel{
+  .ant-upload{
+    padding: 0 !important;
+    margin: 0 auto !important;
+  }
+  .avatar-uploader{
+    display: block;
+  }
+  .ant-modal-close-x{
+    i{
+      margin-top: 18px;
+    }
+  }
+}
