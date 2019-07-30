@@ -4,7 +4,6 @@ import tornado.web
 from tornado.websocket import WebSocketHandler
 from tornado.options import options
 import datetime
-from msg import Msg
 import time
 import json
 
@@ -15,20 +14,24 @@ class ChatHandler(WebSocketHandler):
     msg = []
     def open(self):
         self.users.add(self)  # 建立连接后添加用户到容器中
-        for u in self.users:  # 向已在线用户发送消息
-            res = {
-                'msg':json.dumps(self.msg)
+        res = {
+                'msg':json.dumps(self.msg),
+                'ip':self.request.remote_ip
             }
-            u.write_message(json.dumps(res))
+        self.write_message(json.dumps(res))
+        # for u in self.users:  # 向已在线用户发送消息
+            # u.write_message(json.dumps(res))
  
     def on_message(self, message):
-        print(self.request.remote_ip)
+        print(self.request)
         # time.sleep(2)
-        newmsg = Msg(self.request.remote_ip,datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),message)
+        nmsg = json.loads(message)
         newmsg = {
-            'username':self.request.remote_ip,
+            'ip':self.request.remote_ip,
+            'username':'',
             'date':datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            'msg':message
+            'msg':nmsg['nmsg'],
+            'portrait':nmsg['portrait']
         }
         self.msg.append(newmsg)
         for u in self.users:  # 向在线用户广播消息

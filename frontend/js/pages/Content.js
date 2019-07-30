@@ -2,24 +2,51 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import { Button,List,Avatar,Comment,Input,Form,Layout } from 'antd';
-import AxiosDemo from '../request/AxiosDemo'
 const { TextArea  } = Input;
 const { Content} = Layout;
 // React component
 class MContent extends Component {
     state = {
         value: '',
-        submitting:false
+        submitting:false,
+        ip:''
     }
     componentDidMount() {
         //this.websocket = new WebSocket('ws://172.17.23.117:8889/api/websocket');
         this.websocket = new WebSocket('ws://localhost:80/websocket');
         var that = this;
-        this.websocket.onopen = function (evt) {};
+        this.websocket.onopen = function (evt) {
+            //console.log(evt)
+        };
         this.websocket.onmessage = function(evt) {
-            var msgarr = JSON.parse(evt.data)
-            //console.log('msgarr',msgarr)
-            that.props.onGetMessge(msgarr)
+            var res = JSON.parse(evt.data)
+            //console.log(res)
+            if(!that.state.ip&&res.ip){
+                var info = {
+                    ip:res.ip
+                }
+                var msg = JSON.parse(res.msg)
+                for (var i = 0;i<msg.length-1;i++){
+                    if(msg[i].ip == res.ip){
+                        var info = {
+                            username:msg[i].username,
+                            portrait:msg[i].portrait,
+                            ip:res.ip
+                        }
+                        that.setState({
+                            ip:res.ip,
+                            username:msg[i].username,
+                            portrait:msg[i].portrait
+                        })
+                        
+                        info['username'] = msg[i].username;
+                        info['portrait'] = msg[i].portrait;
+                    }
+                }
+                that.props.onSetInfo(info)
+            }
+            that.props.onGetMessge(res)
+            
             that.setState({
                 submitting:false
             })
@@ -40,7 +67,11 @@ class MContent extends Component {
         this.setState({
             submitting:true
         },function() {
-            this.websocket.send(this.state.value);
+            var param = {
+                portrait:window.mimageUrl?window.mimageUrl:'',
+                nmsg:this.state.value
+            }
+            this.websocket.send(JSON.stringify(param));
             this.setState({
                 value:''
             })
@@ -65,16 +96,17 @@ class MContent extends Component {
                         className="comment-list"
                         itemLayout="horizontal"
                         dataSource={data.msg}
-                        renderItem={item => (
+                        renderItem={item => {
+                            return (
                             <li>
                                 <Comment
-                                    author={item.username}
-                                    avatar={'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'}
+                                    author={item.username||item.ip}
+                                    avatar={item.portrait?<Avatar size="large" src={item.portrait}/>:<Avatar size="large" icon="user" />}
                                     content={this.getMsg(item.msg)}
                                     datetime={this.getDate(item.date)}
                                 />
                             </li>
-                        )}
+                        )}}
                     />
                 </div>
                 <div>
@@ -111,8 +143,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onGetTextActionClick:()=>dispatch(AxiosDemo.getText()),
-        onGetMessge:(msg)=>{dispatch({ type: 'getMsg',data:msg })}
+        onGetMessge:(msg)=>{dispatch({ type:'getMsg',data:msg })},
+        onSetInfo:(msg)=>{dispatch({ type:'setInfo',data:msg })}
     }
 }
 

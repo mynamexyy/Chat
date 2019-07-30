@@ -5,7 +5,7 @@ import tornado.websocket
 from tornado.options import define, options, parse_command_line
 from tornado import gen
 from websocket import ChatHandler
-from  upportraitHandler import upportraitHandler
+from  upportraithandler import UpPortraitHandler
 import signal
 import threading
 import time,os
@@ -27,7 +27,7 @@ def try_exit():
 
 application = tornado.web.Application([
     (r"/websocket", ChatHandler),
-    (r"/upportrait", upportraitHandler),
+    (r"/upportrait", UpPortraitHandler),
 ])
 
 if __name__ == "__main__":

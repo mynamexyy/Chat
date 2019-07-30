@@ -9,6 +9,8 @@ export default (state=initState,action)=>{
             return {
                 msg: JSON.parse(action.data.msg)
             }
+        case 'setInfo':
+            return action.data
         default:
             return state
     }

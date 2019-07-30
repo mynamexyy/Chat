@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { createStore } from 'redux'
 import { Modal,Layout, Menu, Avatar,Icon} from 'antd';
 import UploadModel from './UploadModel'
@@ -8,17 +9,24 @@ const { Header} = Layout;
 
 
 // React component
-class ImgesDemo extends Component {
+class MHeader extends Component {
     state = {
-        picvisible:false
+        picvisible:false,
+        portrait:''
+    }
+    setPortrait=(img)=>{
+        this.setState({
+            portrait:img
+        })
+        
     }
     click=(item, key)=>{
         if(item.key == 2){
             this.UploadModel.handleShow()
         }
     }
-    
     render() {
+        const { data } = this.props;
         return (<Header className={'mheader'}>
                     <Menu
                         theme="dark"
@@ -75,19 +83,36 @@ class ImgesDemo extends Component {
                         </Menu.Item>
                         <Menu.Item>
                             <div className={'mlogo'}>
-                                <Avatar size="large" icon="user" />
+                                {!data.portrait&&!this.state.portrait&&<Avatar size="large" icon="user" />}
+                                {(data.portrait||this.state.portrait)&&<Avatar size="large" src={data.portrait||this.state.portrait}/>}
                             </div>
                         </Menu.Item>
                         <Menu.Item key="2">上传头像</Menu.Item>
                         <Menu.Item key="3">修改名字</Menu.Item>
                     </Menu>
                     <UploadModel
+                        info={data}
+                        setPortrait={this.setPortrait}
                         ref={node => this.UploadModel = node}
                     />
                 </Header>)
     }
 }
 
+function mapStateToProps(state) {
+    //console.log(state);
+    return {
+        data: state.SetInfoReducer
+    }
+}
 
+function mapDispatchToProps(dispatch) {
+    return {
+        onSetInfo:(msg)=>{dispatch({ type:'setInfo',data:msg })}
+    }
+}
 
-module.exports =ImgesDemo
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MHeader)

@@ -31,7 +31,9 @@ export default class UploadModel extends Component{
         })
     }
     handleUpPic=()=>{
-    
+        this.setState({
+            picvisible:false
+        })
     }
     handleCancel=(state)=>{
         this.setState({
@@ -46,11 +48,14 @@ export default class UploadModel extends Component{
         }
         if (info.file.status === 'done') {
             // Get this url from response in real world.
-            getBase64(info.file.originFileObj, imageUrl =>
-                this.setState({
-                    imageUrl,
-                    loading: false,
-                }),
+            getBase64(info.file.originFileObj, imageUrl =>{
+                    this.setState({
+                        imageUrl,
+                        loading: false,
+                    })
+                    this.props.setPortrait(imageUrl);
+                    window.mimageUrl = imageUrl;
+                }
             );
         }
     };
@@ -66,7 +71,7 @@ export default class UploadModel extends Component{
                 className={'UploadModel'}
                 title="上传头像"
                 visible={this.state.picvisible}
-                onOk={this.handleUpPic}
+                onOk={this.handleCancel}
                 onCancel={this.handleCancel}
             >
                 <Upload
@@ -75,6 +80,7 @@ export default class UploadModel extends Component{
                     className="avatar-uploader"
                     showUploadList={false}
                     //action={Util.getBaseUrl()+"/upportrait"}
+                    data={{ip:this.props.info.ip}}
                     action={"api/upportrait"}
                     beforeUpload={beforeUpload}
                     onChange={this.handleChange}

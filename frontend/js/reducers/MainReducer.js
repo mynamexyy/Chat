@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux'
-import AxiosDemoReducer from './AxiosDemoReducer'
-import AddReducer from './AddReducer'
+import SetInfoReducer from './SetInfoReducer'
 import MsgReducer from './MsgReducer'
 
 export default combineReducers({
-    AxiosDemoReducer,
-    AddReducer,
+    SetInfoReducer,
     MsgReducer,
 })
