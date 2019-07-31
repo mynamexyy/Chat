@@ -1,6 +1,6 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
-主要是[Redux](https://github.com/reactjs/redux) 和 [tornado](https://github.com/tornadoweb/tornado)
+在线聊天,主要是[Redux](https://github.com/reactjs/redux) 和 [tornado](https://github.com/tornadoweb/tornado)
 ## 跑起来
 ## 前端
 *  在fontend下参照[book](https://github.com/mynamexyy/book)
