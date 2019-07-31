@@ -16,18 +16,17 @@ class ChatHandler(WebSocketHandler):
         self.users.add(self)  # 建立连接后添加用户到容器中
         res = {
                 'msg':json.dumps(self.msg),
-                'ip':self.request.remote_ip
+                'ip':self.request.headers['X-Real-Ip']
             }
         self.write_message(json.dumps(res))
         # for u in self.users:  # 向已在线用户发送消息
             # u.write_message(json.dumps(res))
  
     def on_message(self, message):
-        print(self.request)
         # time.sleep(2)
         nmsg = json.loads(message)
         newmsg = {
-            'ip':self.request.remote_ip,
+            'ip':self.request.headers['X-Real-Ip'],
             'username':'',
             'date':datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             'msg':nmsg['nmsg'],
@@ -43,7 +42,7 @@ class ChatHandler(WebSocketHandler):
     def on_close(self):
         self.users.remove(self) # 用户关闭连接后从容器中移除用户
         for u in self.users:
-            u.write_message(u"[%s]-[%s]-离开聊天室" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+            u.write_message(u"[%s]-[%s]-离开聊天室" % (self.request.headers['X-Real-Ip'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
  
     def check_origin(self, origin):
     	return True  # 允许WebSocket的跨域请求

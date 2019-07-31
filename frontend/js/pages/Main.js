@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout } from 'antd';
+import { connect } from 'react-redux'
 
 import Content from './Content'
 import Header from './Header'
@@ -8,12 +9,33 @@ import Header from './Header'
 class Main extends Component {
     render() {
         const { data } = this.props;
+        //console.log(this.props)
         return (<Layout className="layout">
-                    <Header />
-                    <Content />
+                    <Header
+                        userinfo={data}
+                    />
+                    <Content
+                        userinfo={data}
+                    />
                 </Layout>)
     }
 }
 
-export default Main
+function mapStateToProps(state) {
+    //console.log(state);
+    return {
+        data: state.SetInfoReducer
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        onSetInfo:(msg)=>{dispatch({ type:'setInfo',data:msg })}
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Main)
 

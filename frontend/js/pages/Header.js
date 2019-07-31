@@ -15,10 +15,7 @@ class MHeader extends Component {
         portrait:''
     }
     setPortrait=(img)=>{
-        this.setState({
-            portrait:img
-        })
-        
+        this.props.onSetInfo({portrait:img})
     }
     click=(item, key)=>{
         if(item.key == 2){
@@ -26,7 +23,7 @@ class MHeader extends Component {
         }
     }
     render() {
-        const { data } = this.props;
+        const data = this.props.userinfo;
         return (<Header className={'mheader'}>
                     <Menu
                         theme="dark"
@@ -83,15 +80,15 @@ class MHeader extends Component {
                         </Menu.Item>
                         <Menu.Item>
                             <div className={'mlogo'}>
-                                {!data.portrait&&!this.state.portrait&&<Avatar size="large" icon="user" />}
-                                {(data.portrait||this.state.portrait)&&<Avatar size="large" src={data.portrait||this.state.portrait}/>}
+                                {!data.portrait&&<Avatar size="large" icon="user" />}
+                                {data.portrait&&<Avatar size="large" src={data.portrait}/>}
                             </div>
                         </Menu.Item>
                         <Menu.Item key="2">上传头像</Menu.Item>
                         <Menu.Item key="3">修改名字</Menu.Item>
                     </Menu>
                     <UploadModel
-                        info={data}
+                        userinfo={data}
                         setPortrait={this.setPortrait}
                         ref={node => this.UploadModel = node}
                     />
@@ -102,7 +99,7 @@ class MHeader extends Component {
 function mapStateToProps(state) {
     //console.log(state);
     return {
-        data: state.SetInfoReducer
+        //data: state.SetInfoReducer
     }
 }
 

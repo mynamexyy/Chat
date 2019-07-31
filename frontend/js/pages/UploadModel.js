@@ -47,14 +47,12 @@ export default class UploadModel extends Component{
             return;
         }
         if (info.file.status === 'done') {
-            // Get this url from response in real world.
             getBase64(info.file.originFileObj, imageUrl =>{
                     this.setState({
                         imageUrl,
                         loading: false,
                     })
                     this.props.setPortrait(imageUrl);
-                    window.mimageUrl = imageUrl;
                 }
             );
         }
@@ -80,7 +78,7 @@ export default class UploadModel extends Component{
                     className="avatar-uploader"
                     showUploadList={false}
                     //action={Util.getBaseUrl()+"/upportrait"}
-                    data={{ip:this.props.info.ip}}
+                    data={{ip:this.props.userinfo.ip}}
                     action={"api/upportrait"}
                     beforeUpload={beforeUpload}
                     onChange={this.handleChange}

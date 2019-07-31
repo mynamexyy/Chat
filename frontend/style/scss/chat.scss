@@ -8,10 +8,22 @@
     .msg_con{
       height: 400px;
       overflow: auto;
+      .ant-comment{
+        img{
+          width: 40px !important;
+          height: 40px !important;
+        }
+      }
     }
   }
   .right{
     flex: 2;
+  }
+  .anticon-user {
+    min-width: 14px;
+    margin-top: 6px;
+    margin-right: 1px;
+    font-size: 25px;
   }
 }
 .mheader{

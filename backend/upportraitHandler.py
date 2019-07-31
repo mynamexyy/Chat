@@ -18,7 +18,7 @@ class UpPortraitHandler(tornado.web.RequestHandler):
             file_type = meta['content_type']
             with open(os.getcwd() + '/files/' + file_name,'wb+') as up:
                 base64_data = base64.b64encode(meta['body'])
-                s = base64_data.decode('utf-8')
+                s = base64_data.decode()
                 portrait = 'data:%s;base64,%s'%(file_type,s)
                 up.write(meta['body'])
         for item in ChatHandler.msg: # 设置新头像

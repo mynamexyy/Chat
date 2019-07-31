@@ -12,8 +12,8 @@ class MContent extends Component {
         ip:''
     }
     componentDidMount() {
-        //this.websocket = new WebSocket('ws://172.17.23.117:8889/api/websocket');
-        this.websocket = new WebSocket('ws://localhost:80/websocket');
+        this.websocket = new WebSocket('ws://172.17.23.117:8889/api/websocket');
+        //this.websocket = new WebSocket('ws://localhost:80/websocket');
         var that = this;
         this.websocket.onopen = function (evt) {
             //console.log(evt)
@@ -68,7 +68,7 @@ class MContent extends Component {
             submitting:true
         },function() {
             var param = {
-                portrait:window.mimageUrl?window.mimageUrl:'',
+                portrait:this.props.userinfo.portrait?this.props.userinfo.portrait:'',
                 nmsg:this.state.value
             }
             this.websocket.send(JSON.stringify(param));
@@ -86,6 +86,7 @@ class MContent extends Component {
     }
     render() {
         const { data } = this.props;
+        console.log(this.props);
         return (<Content className="main">
             <div className={'left'}>
             
