@@ -5,7 +5,7 @@
 ## 前端
 *  在fontend下参照[book](https://github.com/mynamexyy/book)
 ## 后端
-*  在backend下参照运行pip install -r requirement.txt
-*  python main.py
+*  在backend下参照运行pip install -r requirement.txt安装依赖（暂时就只有tornado）
+*  执行python main.py
 ## ngnix
-	ngnix.conf就是ngnix配置栗子
+*  ngnix.conf就是ngnix配置栗子
