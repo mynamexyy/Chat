@@ -4,6 +4,7 @@
 ## 跑起来
 ## 前端
 *  在fontend目录下参照[book](https://github.com/mynamexyy/book)
+*  Content.js里面websocket地址需要修改为自己的ip和ngnix中配置的端口(ngnix配置栗子里面是设置的8889)
 ## 后端
 *  在backend目录下参照运行pip install -r requirement.txt安装依赖（暂时就只有tornado）
 *  执行python main.py
