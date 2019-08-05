@@ -12,7 +12,9 @@ class MContent extends Component {
         ip:''
     }
     componentDidMount() {
-        this.websocket = new WebSocket('ws://172.17.23.117:8889/api/websocket');
+        console.log(location);
+        var ip = location;
+        this.websocket = new WebSocket('ws://'+location.host+'/api/websocket');
         //this.websocket = new WebSocket('ws://localhost:80/websocket');
         var that = this;
         this.websocket.onopen = function (evt) {

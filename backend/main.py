@@ -26,8 +26,8 @@ def try_exit():
         logging.info('exit success')
 
 application = tornado.web.Application([
-    (r"/websocket", ChatHandler),
-    (r"/upportrait", UpPortraitHandler),
+    (r"/api/websocket", ChatHandler),
+    (r"/api/upportrait", UpPortraitHandler),
 ])
 
 if __name__ == "__main__":
