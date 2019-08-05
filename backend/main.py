@@ -35,6 +35,6 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
     if not os.path.exists('files'):
         os.mkdir('files')
-    application.listen(80)
+    application.listen(8080)
     tornado.ioloop.PeriodicCallback(try_exit, 100).start() 
     tornado.ioloop.IOLoop.instance().start()
